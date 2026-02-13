@@ -256,6 +256,7 @@ const animationTimeline = () => {
       zIndex: "-1",
     })
     .staggerFrom(".nine p", 1, ideaTextTrans, 1.2)
+
     .to(
       ".last-smile",
       0.5,
@@ -263,7 +264,41 @@ const animationTimeline = () => {
         rotation: 90,
       },
       "+=1"
-    );
+    )
+    // Анимация появления блока с историей айтишника
+    .to(".five-and-half", 0.7, {
+      opacity: 1,
+      y: -20,
+      ease: Power2.easeOut,
+    }, "+=0.5")
+    .to(".five-and-half", 0.7, {
+      opacity: 0,
+      y: 20,
+      ease: Power2.easeIn,
+    }, "+=3")
+    // Анимация финального блока с признанием в любви
+    .to(".ten", 1, {
+      opacity: 1,
+      y: -20,
+      ease: Power2.easeOut,
+      onComplete: heartRain
+    }, "+=0.5");
+// Функция для анимации "дождя" из сердечек
+function heartRain() {
+  const heartContainer = document.querySelector('.heart-rain');
+  if (!heartContainer) return;
+  heartContainer.innerHTML = '';
+  const hearts = 16;
+  for (let i = 0; i < hearts; i++) {
+    const heart = document.createElement('span');
+    heart.className = 'heart';
+    heart.innerHTML = '❤';
+    heart.style.left = Math.random() * 90 + '%';
+    heart.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+    heart.style.animationDelay = (Math.random() * 1.2) + 's';
+    heartContainer.appendChild(heart);
+  }
+}
 
   // tl.seek("currentStep");
   // tl.timeScale(2);
